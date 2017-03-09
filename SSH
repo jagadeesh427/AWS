@@ -95,6 +95,10 @@ cd /var/www/docs/ip-10-0-0-124.us-west-1.compute.internal
  
  http://10.0.0.124/
  
+ You should see 
+  Hello world !!!!!!
+ 
+ 
  
  
  
