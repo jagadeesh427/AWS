@@ -1,0 +1,15 @@
+# AWS
+HOW TO CONNECT TO AWS INSTANCE IN MAC
+
+
+
+SSH forwarding
+
+
+chmod 600 /Users/jagadeeshyadav/downloads/testing.pem
+
+ssh-add -K /Users/jagadeeshyadav/downloads/testing.pem
+
+ssh -A ec2-user@ec2-52-53-142-128.us-west-1.compute.amazonaws.com
+
+
