@@ -55,6 +55,9 @@ ServerName ip-10-0-0-124.us-west-1.compute.internal:80
 
 DocumentRoot /var/www/docs/ip-10-0-0-124.us-west-1.compute.internal
 
+
+%s/dummy-host.example.com/ip-10-0-0-124.us-west-1.compute.internal
+
 telnet ip-10-0-0-124.us-west-1.compute.internal 80
 
 chkconfig httpd on
