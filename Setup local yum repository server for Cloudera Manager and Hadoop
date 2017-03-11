@@ -1,0 +1,117 @@
+Setup local yum repository server for Cloudera Manager and Hadoop
+
+cd /etc/yum.repos.d
+
+## g0to to websites##
+http://archive.cloudera.com/cdh5/redhat/5/x86_64/cdh/
+https://archive.cloudera.com/cm5/redhat/6/x86_64/cm/
+
+wget https://archive.cloudera.com/cm5/redhat/6/x86_64/cm/cloudera-manager.repo
+wget http://archive.cloudera.com/cdh5/redhat/5/x86_64/cdh/cloudera-cdh5.repo
+
+
+yum -y install yum-utils createrepo
+
+cat cloudera-* ( to know the cdh and CM urls)
+
+setup repositories on http server
+
+ cat /etc/httpd/conf/httpd.conf
+
+cd /var/www/docs/ip-172-31-0-112.us-west-1.compute.internal
+
+nohup reposync cloudera-manager &
+
+nohup reposync cloudera-cdh5 &
+
+cd base
+du -h . ( to find out downloads )
+
+cat /etc/yum.repos.d/cloudera-*
+
+mkdir -p cdh5/redhat/5/x86_64/cdh/5/
+cd cdh5/redhat/5/x86_64/cdh/5/
+
+
+cd /var/www/docs/ip-172-31-0-112.us-west-1.compute.internal
+
+ mkdir -p cm5/redhat/6/x86_64/cm/5/
+mv cloudera-manager/* cm5/redhat/6/x86_64/cm/5/ 
+ls -ltr cm5/redhat/6/x86_64/cm/5/
+
+cd cm5/redhat/6/x86_64/cm/5/
+createrepo .
+ls -ltr 
+cd repodata
+
+
+cd /var/www/docs/ip-172-31-0-112.us-west-1.compute.internal/cdh5/redhat/5/x86_64/cdh/5/
+createrepo .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
