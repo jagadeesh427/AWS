@@ -49,6 +49,32 @@ cd /var/www/docs/ip-172-31-0-112.us-west-1.compute.internal/cdh5/redhat/5/x86_64
 createrepo .
 
 
+cd /etc/yum.repos.d/
+
+vi cloudera*.repo
+
+vi editor 
+making changes to CD5
+%s/archive.cloudera.com/ip-172-31-0-112.us-west-1.compute.internal
+%s/https/http
+
+:w
+:n
+making chnages to CM5
+
+%s/archive.cloudera.com/ip-172-31-0-112.us-west-1.compute.internal
+%s/https/http
+
+##check the createrepo is success
+
+yum repolist
+
+
+
+
+
+
+
 
 
 
