@@ -1,0 +1,62 @@
+Install Cloudera Manager
+
+
+http://archive.cloudera.com/cm5/installer/latest/
+
+http://archive.cloudera.com/cm5/installer/latest/cloudera-manager-installer.bin
+
+wget http://archive.cloudera.com/cm5/installer/latest/cloudera-manager-installer.bin
+
+chmod +x cloudera-manager-installer.bin
+cd /var/www/docs/ip-172-31-0-112.us-west-1.compute.internal/cm5/redhat/6/x86_64/cm/5/
+cat /etc/yum.repos.d/cloudera-manager.repo
+cd ..
+wget http://archive.cloudera.com/cm5/redhat/6/x86_64/cm/RPM-GPG-KEY-cloudera
+
+ls -ltr
+you should see
+-rw-r--r--  1 root root 1690 Oct 28  2013 RPM-GPG-KEY-cloudera
+drwxr-xr-x. 4 root root 4096 Mar 11 21:27 5
+
+cd 
+./cloudera-manager-installer.bin --skip_repo_package=1
+
+cd /var/log/cloudera-manager-installer/
+
+sudo service cloudera-scm-server status
+
+
+
+sudo ls -l /var/log/cloudera-scm-server
+sudo cat /var/log/cloudera-scm-server/cloudera-scm-server.out
+
+df -h
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
