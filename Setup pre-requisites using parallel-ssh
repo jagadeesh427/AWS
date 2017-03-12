@@ -1,0 +1,56 @@
+###Setup pre-requisites using parallel-ssh####
+
+ssh -A root@ec2-54-183-186-138.us-west-1.compute.amazonaws.com
+
+
+mkdir setup_cluster
+
+cd setup_cluster
+vi preparenode.sh
+vi hosts.txt
+vi setup_centos.sh
+chmod u+x setup_centos.sh
+./setup_centos.sh
+
+ssh -A root@ec2-54-183-186-138.us-west-1.compute.amazonaws.com
+
+view preparenode.log
+vi /etc/selinux/config
+service ntpd status
+
+check with other nodes as well.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
