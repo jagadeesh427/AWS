@@ -1,0 +1,32 @@
+pssh
+
+
+wget https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/parallel-ssh/pssh-2.3.1.tar.gz
+
+tar xzf pssh-2.3.1.tar.gz
+
+ls -ltr
+cd bin
+pwd
+vi ~/.bash_profile
+
+add below two lines
+
+PATH=$PATH:/root/pssh-2.3.1/bin
+export PATH
+
+
+cd 
+
+pssh -v -t 0 -l root -H "ip-172-31-31-78.us-west-1.compute.internal" "-O StrictHostKeyChecking=no" 'df -h'
+
+you should see 
+
+[1] 23:19:20 [SUCCESS] ip-172-31-31-78.us-west-1.compute.internal
+
+
+
+
+
+
+
