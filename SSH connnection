@@ -6,7 +6,7 @@ ssh-add -K /Users/jagadeeshyadav/Desktop/cdh54.pem
  ssh -A root@ec2-52-53-130-169.us-west-1.compute.amazonaws.com
  
  ssh root@ec2-54-193-118-77.us-west-1.compute.amazonaws.com
- df
+ df -h
  resize2fs /dev/xvde
  
  
