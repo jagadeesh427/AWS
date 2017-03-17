@@ -9,6 +9,9 @@ ls -ltr
 cd bin
 pwd
 vi ~/.bash_profile
+. ~/.bash_profile
+pssh
+
 
 add below two lines
 
