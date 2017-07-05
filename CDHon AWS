@@ -1,1 +1,191 @@
 
+
+provision AWS EC2 instances
+redhat 6
+m3.large instances
+40 GB storage
+
+sudo vi /etc/hosts
+add
+#AWS1
+54.153.10.54 ec2-54-153-10-54.us-west-1.compute.amazonaws.com ip-172-31-2-224.us-west-1.compute.internal aws.cdh5.n1
+54.193.123.249 ec2-54-193-123-249.us-west-1.compute.amazonaws.com ip-172-31-5-210.us-west-1.compute.internal aws.cdh5.n2
+52.53.249.127 ec2-52-53-249-127.us-west-1.compute.amazonaws.com ip-172-31-6-213.us-west-1.compute.internal aws.cdh5.n3
+54.215.230.58 ec2-54-215-230-58.us-west-1.compute.amazonaws.com ip-172-31-8-132.us-west-1.compute.internal aws.cdh5.n4
+
+
+login in to all nodes
+
+ssh -i ~/desktop/cdh5.pem ec2-user@aws.cdh5.n1
+ssh -i ~/desktop/cdh5.pem ec2-user@aws.cdh5.n2
+ssh -i ~/desktop/cdh5.pem ec2-user@aws.cdh5.n3
+ssh -i ~/desktop/cdh5.pem ec2-user@aws.cdh5.n4
+
+### disable Selinux on all nodes
+
+sudo vi /etc/selinux/config
+
+## disable iptables
+
+on all nodes
+sudo service iptables status
+sudo service iptables stop
+
+## create group hadoop and user hduser
+
+sudo useradd hadoop
+sudo useradd hduser -g hadoop
+
+## add hduser to sudoers
+
+sudo visudo
+
+add 
+hduser          ALL=(ALL)       NOPASSWD: ALL
+ on all nodes
+ 
+ ######
+ sudo su hduser
+cd ~
+ssh-keygen
+ls -altr
+cd .ssh
+cat id_rsa
+-----BEGIN RSA PRIVATE KEY-----
+MIIEoQIBAAKCAQEAwAzGuyvo/82mYYDaz78tFMwTOH8icPzdlr6I09Q5JCi3Zf9D
+2lLiFjCJzEwBDN9rnSReTYt63ZLIFrYVMLSBSpxA/1dmPlAN8z5+mxZSL/kGVwZn
+hFKUmSagBsV9N/NzuUnXJQAIDy7Cfp0VvmiK0yRiHR/IPx+1zoCC+MHsijJutgSZ
+frBgBHxV02KaD/hTMIYnX2TnJwMav0RCGKlPVaIYe5FDaHqCj/4XnrbXW1LrQblo
+0gw3RcXXuwpseJuEfFwpB/6GlL3F2s2yaljfpnf9uVa6DUnBs7j1uKGk9L6he5Qx
+0XL7Q7qoDSe4XNRIAJTalBf+QMRDiXiSemRbPQIBIwKCAQBXy1OIw522xGlRJPZQ
+V2UQ0lHt8PnNQGVMOdgmUmNDutd/FZtcfakutxpsBXzSr0cjQ9NWpimJ3LM9lREA
+UoQ/XV+Kq5x0Qdp9020Tsm622D1pnIcX6zydyIOrUvdqCORx9d6x1CDw/27ay3en
+gD92dwhH1APFFc90WAFbxl2BAFF2DXx+dfVTZLft+rfrpvR5z3faehQAS/JI40Y8
+OYLfERDX5YJWGYtWqU6CjbZpasd/8KbZ1IENiEp4PsjRiVcbR/UY0XLFhDHe53Yq
+I4dD5QC12z9HDyl1tMYmMlAKFoXbP87sE4K6G0I3svOZOjDNLeuIjozdBv9pVWr3
+xNrLAoGBAO2KTVv53mnUlTDk15KV2mNUJqvY05pYkaQLpX6yP+sp+giSPNH0Tg0x
+pVcmMZRJe+WVQTos4qsKg/SikY0UI4ZDQrFrUd3m/zU2OaX8NNGRXqoYE6TL5R2S
+BegDweNj/DnWzWRf18V9woD4+YhH+Qy3OTZZ69j6bdOQqgazTRHHAoGBAM75eb0w
+L+2JetKV9pUmoLkR6aVYpkENy1S0LZnCq5XjsrsRDmRX1JSQxmS670QLPXFEmcGo
+qLHtp8Axb4gaG4+tbA92Yn2drWOM+bnx9lYwlGITc3rV83lwN5xBUbJ6sSLVKzjN
+MIfO3IY6Vrs1q/CIhzD/dFEi1yFCY7HJGKrbAoGAc2But6VAJMZXF7+b6BzmasJ5
+LuWom2zZBolQYhwQauiAwlWogzwl6Sa+BcIYFNM8La7lKuKZ+05AF7ytGKNhtj3t
+MZqG2X7TusKRB3qADgTHlHIYK3j6QZARf1JIOz8xXev9XKOUsGGnnbrCWCL1T1Gu
+ExW7sohD+QvATGW3uC0CgYEAvTvdBL5XtJrz87xPKUfjZ2DVnnzvxnMDC51rhURF
+G1PWnGddnZIhceNzj0vTcWlcv1Sp1aGESufp1Ep0mbF4SNkSV0eqgXo4IIDkUjxO
+77djF9dFApe6CKEc5qIezxEW+0aN6so6/9MSw92RIDESOwB7moMohLIjxqMZUhbx
++0sCgYAO74D4pxEAQTNK8p8LG7fVn5gUBV2K5oA7dMCRG3EtvdU6cZysVlmiX7lN
+eURCt0VsYOvntW9B7iCkreTN2raXSV1qgJTY0DqPWXUpEK0uQCKmE6m1mmU7R93w
++CYgEp1nRLajOzoUE5XE2b6eWcqlLXpB7zMZszRApk+Kq31sPA==
+-----END RSA PRIVATE KEY-----
+
+on the remainig 3 nodes
+
+mkdir .ssh; chmod 700 .ssh
+
+####create id_rsa and add key on all nodes
+
+vi .ssh/id_rsa  
+-----BEGIN RSA PRIVATE KEY-----
+MIIEoQIBAAKCAQEAwAzGuyvo/82mYYDaz78tFMwTOH8icPzdlr6I09Q5JCi3Zf9D
+2lLiFjCJzEwBDN9rnSReTYt63ZLIFrYVMLSBSpxA/1dmPlAN8z5+mxZSL/kGVwZn
+hFKUmSagBsV9N/NzuUnXJQAIDy7Cfp0VvmiK0yRiHR/IPx+1zoCC+MHsijJutgSZ
+frBgBHxV02KaD/hTMIYnX2TnJwMav0RCGKlPVaIYe5FDaHqCj/4XnrbXW1LrQblo
+0gw3RcXXuwpseJuEfFwpB/6GlL3F2s2yaljfpnf9uVa6DUnBs7j1uKGk9L6he5Qx
+0XL7Q7qoDSe4XNRIAJTalBf+QMRDiXiSemRbPQIBIwKCAQBXy1OIw522xGlRJPZQ
+V2UQ0lHt8PnNQGVMOdgmUmNDutd/FZtcfakutxpsBXzSr0cjQ9NWpimJ3LM9lREA
+UoQ/XV+Kq5x0Qdp9020Tsm622D1pnIcX6zydyIOrUvdqCORx9d6x1CDw/27ay3en
+gD92dwhH1APFFc90WAFbxl2BAFF2DXx+dfVTZLft+rfrpvR5z3faehQAS/JI40Y8
+OYLfERDX5YJWGYtWqU6CjbZpasd/8KbZ1IENiEp4PsjRiVcbR/UY0XLFhDHe53Yq
+I4dD5QC12z9HDyl1tMYmMlAKFoXbP87sE4K6G0I3svOZOjDNLeuIjozdBv9pVWr3
+xNrLAoGBAO2KTVv53mnUlTDk15KV2mNUJqvY05pYkaQLpX6yP+sp+giSPNH0Tg0x
+pVcmMZRJe+WVQTos4qsKg/SikY0UI4ZDQrFrUd3m/zU2OaX8NNGRXqoYE6TL5R2S
+BegDweNj/DnWzWRf18V9woD4+YhH+Qy3OTZZ69j6bdOQqgazTRHHAoGBAM75eb0w
+L+2JetKV9pUmoLkR6aVYpkENy1S0LZnCq5XjsrsRDmRX1JSQxmS670QLPXFEmcGo
+qLHtp8Axb4gaG4+tbA92Yn2drWOM+bnx9lYwlGITc3rV83lwN5xBUbJ6sSLVKzjN
+MIfO3IY6Vrs1q/CIhzD/dFEi1yFCY7HJGKrbAoGAc2But6VAJMZXF7+b6BzmasJ5
+LuWom2zZBolQYhwQauiAwlWogzwl6Sa+BcIYFNM8La7lKuKZ+05AF7ytGKNhtj3t
+MZqG2X7TusKRB3qADgTHlHIYK3j6QZARf1JIOz8xXev9XKOUsGGnnbrCWCL1T1Gu
+ExW7sohD+QvATGW3uC0CgYEAvTvdBL5XtJrz87xPKUfjZ2DVnnzvxnMDC51rhURF
+G1PWnGddnZIhceNzj0vTcWlcv1Sp1aGESufp1Ep0mbF4SNkSV0eqgXo4IIDkUjxO
+77djF9dFApe6CKEc5qIezxEW+0aN6so6/9MSw92RIDESOwB7moMohLIjxqMZUhbx
++0sCgYAO74D4pxEAQTNK8p8LG7fVn5gUBV2K5oA7dMCRG3EtvdU6cZysVlmiX7lN
+eURCt0VsYOvntW9B7iCkreTN2raXSV1qgJTY0DqPWXUpEK0uQCKmE6m1mmU7R93w
++CYgEp1nRLajOzoUE5XE2b6eWcqlLXpB7zMZszRApk+Kq31sPA==
+-----END RSA PRIVATE KEY-----
+
+
+on all nodes
+
+ls -ltr .ssh/id_rsa
+
+chmod 600 .ssh/id_rsa
+ls -ltr .ssh/id_rsa
+
+## vi id_rsa.pub on all nodes
+
+and add
+
+node1:
+ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAwAzGuyvo/82mYYDaz78tFMwTOH8icPzdlr6I09Q5JCi3Zf9D2lLiFjCJzEwBDN9rnSReTYt63ZLIFrYVMLSBSpxA/1dmPlAN8z5+mxZSL/kGVwZnhFKUmSagBsV9N/NzuUnXJQAIDy7Cfp0VvmiK0yRiHR/IPx+1zoCC+MHsijJutgSZfrBgBHxV02KaD/hTMIYnX2TnJwMav0RCGKlPVaIYe5FDaHqCj/4XnrbXW1LrQblo0gw3RcXXuwpseJuEfFwpB/6GlL3F2s2yaljfpnf9uVa6DUnBs7j1uKGk9L6he5Qx0XL7Q7qoDSe4XNRIAJTalBf+QMRDiXiSemRbPQ== hduser@ip-172-31-2-224
+node2;
+ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAwAzGuyvo/82mYYDaz78tFMwTOH8icPzdlr6I09Q5JCi3Zf9D2lLiFjCJzEwBDN9rnSReTYt63ZLIFrYVMLSBSpxA/1dmPlAN8z5+mxZSL/kGVwZnhFKUmSagBsV9N/NzuUnXJQAIDy7Cfp0VvmiK0yRiHR/IPx+1zoCC+MHsijJutgSZfrBgBHxV02KaD/hTMIYnX2TnJwMav0RCGKlPVaIYe5FDaHqCj/4XnrbXW1LrQblo0gw3RcXXuwpseJuEfFwpB/6GlL3F2s2yaljfpnf9uVa6DUnBs7j1uKGk9L6he5Qx0XL7Q7qoDSe4XNRIAJTalBf+QMRDiXiSemRbPQ== hduser@ip-172-31-5-210
+node 3;
+ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAwAzGuyvo/82mYYDaz78tFMwTOH8icPzdlr6I09Q5JCi3Zf9D2lLiFjCJzEwBDN9rnSReTYt63ZLIFrYVMLSBSpxA/1dmPlAN8z5+mxZSL/kGVwZnhFKUmSagBsV9N/NzuUnXJQAIDy7Cfp0VvmiK0yRiHR/IPx+1zoCC+MHsijJutgSZfrBgBHxV02KaD/hTMIYnX2TnJwMav0RCGKlPVaIYe5FDaHqCj/4XnrbXW1LrQblo0gw3RcXXuwpseJuEfFwpB/6GlL3F2s2yaljfpnf9uVa6DUnBs7j1uKGk9L6he5Qx0XL7Q7qoDSe4XNRIAJTalBf+QMRDiXiSemRbPQ== hduser@ip-172-31-6-213
+node 4: 
+ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAwAzGuyvo/82mYYDaz78tFMwTOH8icPzdlr6I09Q5JCi3Zf9D2lLiFjCJzEwBDN9rnSReTYt63ZLIFrYVMLSBSpxA/1dmPlAN8z5+mxZSL/kGVwZnhFKUmSagBsV9N/NzuUnXJQAIDy7Cfp0VvmiK0yRiHR/IPx+1zoCC+MHsijJutgSZfrBgBHxV02KaD/hTMIYnX2TnJwMav0RCGKlPVaIYe5FDaHqCj/4XnrbXW1LrQblo0gw3RcXXuwpseJuEfFwpB/6GlL3F2s2yaljfpnf9uVa6DUnBs7j1uKGk9L6he5Qx0XL7Q7qoDSe4XNRIAJTalBf+QMRDiXiSemRbPQ== hduser@ip-172-31-8-132
+
+## vi authorized_keys on all nodes
+
+add below 4 lines
+ 
+ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAwAzGuyvo/82mYYDaz78tFMwTOH8icPzdlr6I09Q5JCi3Zf9D2lLiFjCJzEwBDN9rnSReTYt63ZLIFrYVMLSBSpxA/1dmPlAN8z5+mxZSL/kGVwZnhFKUmSagBsV9N/NzuUnXJQAIDy7Cfp0VvmiK0yRiHR/IPx+1zoCC+MHsijJutgSZfrBgBHxV02KaD/hTMIYnX2TnJwMav0RCGKlPVaIYe5FDaHqCj/4XnrbXW1LrQblo0gw3RcXXuwpseJuEfFwpB/6GlL3F2s2yaljfpnf9uVa6DUnBs7j1uKGk9L6he5Qx0XL7Q7qoDSe4XNRIAJTalBf+QMRDiXiSemRbPQ== hduser@ip-172-31-2-224
+ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAwAzGuyvo/82mYYDaz78tFMwTOH8icPzdlr6I09Q5JCi3Zf9D2lLiFjCJzEwBDN9rnSReTYt63ZLIFrYVMLSBSpxA/1dmPlAN8z5+mxZSL/kGVwZnhFKUmSagBsV9N/NzuUnXJQAIDy7Cfp0VvmiK0yRiHR/IPx+1zoCC+MHsijJutgSZfrBgBHxV02KaD/hTMIYnX2TnJwMav0RCGKlPVaIYe5FDaHqCj/4XnrbXW1LrQblo0gw3RcXXuwpseJuEfFwpB/6GlL3F2s2yaljfpnf9uVa6DUnBs7j1uKGk9L6he5Qx0XL7Q7qoDSe4XNRIAJTalBf+QMRDiXiSemRbPQ== hduser@ip-172-31-5-210
+sh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAwAzGuyvo/82mYYDaz78tFMwTOH8icPzdlr6I09Q5JCi3Zf9D2lLiFjCJzEwBDN9rnSReTYt63ZLIFrYVMLSBSpxA/1dmPlAN8z5+mxZSL/kGVwZnhFKUmSagBsV9N/NzuUnXJQAIDy7Cfp0VvmiK0yRiHR/IPx+1zoCC+MHsijJutgSZfrBgBHxV02KaD/hTMIYnX2TnJwMav0RCGKlPVaIYe5FDaHqCj/4XnrbXW1LrQblo0gw3RcXXuwpseJuEfFwpB/6GlL3F2s2yaljfpnf9uVa6DUnBs7j1uKGk9L6he5Qx0XL7Q7qoDSe4XNRIAJTalBf+QMRDiXiSemRbPQ== hduser@ip-172-31-6-213
+ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAwAzGuyvo/82mYYDaz78tFMwTOH8icPzdlr6I09Q5JCi3Zf9D2lLiFjCJzEwBDN9rnSReTYt63ZLIFrYVMLSBSpxA/1dmPlAN8z5+mxZSL/kGVwZnhFKUmSagBsV9N/NzuUnXJQAIDy7Cfp0VvmiK0yRiHR/IPx+1zoCC+MHsijJutgSZfrBgBHxV02KaD/hTMIYnX2TnJwMav0RCGKlPVaIYe5FDaHqCj/4XnrbXW1LrQblo0gw3RcXXuwpseJuEfFwpB/6GlL3F2s2yaljfpnf9uVa6DUnBs7j1uKGk9L6he5Qx0XL7Q7qoDSe4XNRIAJTalBf+QMRDiXiSemRbPQ== hduser@ip-172-31-8-132
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
