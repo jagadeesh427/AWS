@@ -146,6 +146,23 @@ ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAwAzGuyvo/82mYYDaz78tFMwTOH8icPzdlr6I09Q5JCi3
 
 
 
+SSH
+ssh hduser@localhost
+ssh hduser@ip-172-31-2-210
+ssh hduser@ip-172-31-6-213
+
+
+#####
+sudo yum -y install openssh-clients perl parted
+
+on all nodes
+
+## reboot all the ec2 instances
+
+sudo su - hduser
+
+ wget https://archive.cloudera.com/cm5/installer/latest/cloudera-manager-installer.bin
+ chmod +x ./cloudera-manager-installer.bin
 
 
 
