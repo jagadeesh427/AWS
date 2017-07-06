@@ -163,7 +163,7 @@ sudo su - hduser
 
  wget https://archive.cloudera.com/cm5/installer/latest/cloudera-manager-installer.bin
  chmod +x ./cloudera-manager-installer.bin
-
+sudo ./cloudera-manager-installer.bin
 
 
 
