@@ -1,0 +1,106 @@
+provision instance
+
+centos 
+CentOS Linux 6 x86_64 HVM EBS 1704_01-74e73035-3435-48d6-88e0-89cc02ad83ee-ami-23285c35.4 (ami-64d7f104)
+m4.xlarge
+50 GB
+5 nodes
+
+cd .ssh (save pem file in .ssh)
+ssh -i cdh5.pem centos@ec2-13-56-135-126.us-west-1.compute.amazonaws.com
+
+sudo su -
+df -h
+fdisk -l
+fdisk /dev/xvda
+u
+p
+d
+n
+p
+1
+2048
+press "enter"
+p
+a
+1
+w
+
+stop and start instance
+
+ssh -i cdh5.pem centos@ec2-13-56-135-126.us-west-1.compute.amazonaws.com
+
+sudo su -
+fdisk -l
+
+resize2fs /dev/xvda1
+hostname
+
+sudo yum -y update;sudo yum -y install telnet;sudo yum -y install httpd;sudo yum -y install iptables-services
+
+vi /etc/sysconfig/network
+edit the host name only ipaddress
+
+vi /etc/resolv.conf
+
+edit nameserver
+
+vi /etc/hosts
+
+add ipaddress
+ip-172-31-16-136.us-west-1.compute.internal
+
+stop and start instance
+
+
+ssh -i cdh5.pem centos@ec2-13-56-135-126.us-west-1.compute.amazonaws.com
+
+sudo su -
+
+hostname
+you should see only ip-172-31-16-136
+
+disable selinux
+
+vi /etc/selinux/config
+sudo chkconfig iptables off; sudo service iptables stop
+
+###stop and start the instance###
+
+
+sudo useradd hadoop;sudo useradd hduser -g hadoop
+
+sudo visudo
+
+# Same thing without a password
+# %wheel        ALL=(ALL)       NOPASSWD: ALL
+hduser          ALL=(ALL)       NOPASSWD: ALL
+
+sudo su hduser
+
+ssh-keygen
+
+cp id_rsa.pub authorized_keys
+
+ssh hduser@localhost
+exit
+
+sudo yum -y install 
+
+sudo wget http://archive-primary.cloudera.com/cm5/installer/latest/cloudera-manager-installer.bin
+sudo chmod u+x ./cloudera-manager-installer.bin
+sudo ./cloudera-manager-installer.bin
+
+
+
+
+
+
+
+
+
+
+
+
+
+
