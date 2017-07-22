@@ -91,6 +91,13 @@ sudo wget http://archive-primary.cloudera.com/cm5/installer/latest/cloudera-mana
 sudo chmod u+x ./cloudera-manager-installer.bin
 sudo ./cloudera-manager-installer.bin
 
+sudo su -
+ vi /etc/cloudera-scm-server/db.mgmt.properties
+ 
+ edit
+ 
+ com.cloudera.cmf.ACTIVITYMONITOR.db.host=ip-172-31-4-121
+
 
 
 while installing use
