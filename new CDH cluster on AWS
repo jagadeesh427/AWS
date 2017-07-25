@@ -65,6 +65,8 @@ disable selinux
 vi /etc/selinux/config
 sudo chkconfig iptables off; sudo service iptables stop
 
+sysctl -w vm.swappiness=0
+
 ###stop and start the instance###
 
 
